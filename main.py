@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # 🔒 Configura tu bot de Telegram
+##LOLO
 TELEGRAM_TOKEN = "8174192090:AAEqGlNr2MVAIih0kvFYu43eK7PHeONyF5o"
 CHAT_ID = "7811372848"
 
