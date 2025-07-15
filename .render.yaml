@@ -1,0 +1,8 @@
+services:
+  - type: cron
+    name: xbox-price-tracker
+    runtime: python
+    plan: free
+    schedule: "0 */3 * * *"  # Cada 3 horas
+    buildCommand: ""
+    startCommand: "python main.py"
