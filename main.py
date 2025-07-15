@@ -17,20 +17,20 @@ def load_games(filename="games.json"):
 
 def get_prices_from_xbox_deals(url):
     headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Accept-Language": "es-CO,es;q=0.9,en;q=0.8"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+        "Accept-Language": "es-CO,es;q=0.9,en;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "DNT": "1"
     }
-
     response = requests.get(url, headers=headers)
     print(f"🌐 Código de estado HTTP: {response.status_code}")
-    
+
     if response.status_code != 200:
         print("❌ No se pudo obtener la página correctamente.")
         return None, None, None
-
-    # Mostrar parte del contenido HTML
-    print("🔍 Mostrando primeros 1000 caracteres del HTML:")
-    print(response.text[:1000])  # Puedes ampliar si quieres
 
     soup = BeautifulSoup(response.text, "html.parser")
 
