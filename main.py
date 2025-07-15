@@ -17,10 +17,18 @@ def load_games(filename="games.json"):
 
 def get_prices_from_xbox_deals(url):
     headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Accept-Language": "es-CO,es;q=0.9,en;q=0.8"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0 Safari/537.36",
+        "Accept-Language": "es-CO,es;q=0.9,en;q=0.8",
+        "Referer": "https://www.google.com/",
+        "DNT": "1",
+        "Connection": "keep-alive"
     }
     response = requests.get(url, headers=headers)
+
+    if response.status_code != 200:
+        print(f"⚠️ Error HTTP {response.status_code} al acceder a: {url}")
+        return None, None, None
+
     soup = BeautifulSoup(response.text, "html.parser")
 
     # Precio actual
@@ -42,53 +50,4 @@ def get_prices_from_xbox_deals(url):
     try:
         max_price = int(max_price_tag.text.replace("$", "").replace(",", "").strip()) if max_price_tag else None
     except:
-        max_price = None
-
-    return current_price, min_price, max_price
-
-def send_telegram_message(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": CHAT_ID,
-        "text": message,
-        "parse_mode": "HTML"
-    }
-    response = requests.post(url, data=payload)
-    print("📨 Respuesta de Telegram:", response.text)
-
-def main():
-    juegos = load_games()
-
-    for juego in juegos:
-        print(f"🔍 Revisando: {juego['name']}...")
-        current, minimo, maximo = get_prices_from_xbox_deals(juego["url"])
-
-        if current is None:
-            print("❌ No se pudo obtener el precio actual.\n")
-            continue
-
-        print(f"💰 Actual: {current} | 📉 Mínimo: {minimo} | 📈 Máximo: {maximo}")
-
-        alertas = []
-        if minimo and current <= minimo:
-            alertas.append("🟢 ¡Precio actual igual o menor al mínimo histórico!")
-        if current <= juego["max_price"]:
-            alertas.append("🎯 ¡Precio actual igual o menor al precio objetivo!")
-
-        if alertas:
-            alertas_texto = "\n".join(alertas)
-            mensaje = (
-                f"<b>{juego['name']}</b>\n"
-                f"💰 <b>Actual:</b> ${current:,} COP\n"
-                f"📉 <b>Mínimo histórico:</b> ${minimo:,} COP\n"
-                f"📈 <b>Máximo histórico:</b> ${maximo:,} COP\n"
-                f"{alertas_texto}\n"
-                f"🔗 <a href=\"{juego['url']}\">Ver en Xbox Deals</a>"
-            )
-            send_telegram_message(mensaje)
-            print("✅ Alerta enviada por Telegram.\n")
-        else:
-            print("⏳ Sin alertas para este juego.\n")
-
-if __name__ == "__main__":
-    main()
+        max_price =_
