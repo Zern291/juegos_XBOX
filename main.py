@@ -84,7 +84,6 @@ def main():
                 f"📉 <b>Mínimo histórico:</b> ${minimo:,} COP\n"
                 f"📈 <b>Máximo histórico:</b> ${maximo:,} COP\n"
                 f"{'\\n'.join(alertas)}\n"
-                f"🔗 <a href=\"{juego['url']}\">Ver en Xbox Deals</a>"
             )
             send_telegram_message(msg)
             print("📨 ¡Alerta enviada por Telegram!\n")
