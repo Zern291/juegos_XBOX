@@ -3,7 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 
 # 🔒 Configura tu bot de Telegram
-##LOLO
 TELEGRAM_TOKEN = "8174192090:AAEqGlNr2MVAIih0kvFYu43eK7PHeONyF5o"
 CHAT_ID = "7811372848"
 
@@ -78,13 +77,12 @@ def main():
             alertas.append("🎯 ¡Precio actual igual o menor al precio objetivo!")
 
         if alertas:
+            alertas_texto = "\n".join(alertas)
             msg = (
                 f"<b>{juego['name']}</b>\n"
                 f"💰 <b>Actual:</b> ${current:,} COP\n"
                 f"📉 <b>Mínimo histórico:</b> ${minimo:,} COP\n"
                 f"📈 <b>Máximo histórico:</b> ${maximo:,} COP\n"
-                alertas_texto = "\n".join(alertas)
-                ...
                 f"{alertas_texto}\n"
                 f"🔗 <a href=\"{juego['url']}\">Ver en Xbox Deals</a>"
             )
