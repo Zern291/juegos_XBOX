@@ -57,8 +57,6 @@ def send_telegram_message(message):
     print("📨 Respuesta de Telegram:", response.text)
 
 def main():
-    send_telegram_message("✅ Bot funcionando correctamente.")
-    exit()
     juegos = load_games()
 
     for juego in juegos:
